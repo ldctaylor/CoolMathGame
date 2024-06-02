@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import useGameState from "./hooks/useGameState";
 import Tile from "./Tile";
-import { range, sum, random, randomSumIn } from "./utils";
+import { range, sum } from "./utils";
 import "bootstrap/dist/css/bootstrap.css";
 import Button from "./Button";
 import Grid from "./Grid";
@@ -9,22 +9,19 @@ import Welcome from "./Welcome";
 import SecondsLeft from "./SecondsLeft";
 
 const CoolMathGame = ({ startNewGame, numberOfPlays }) => {
-  const squares = 9;
-  const [faces, setFaces] = useState(random(1, squares));
+  const {
+    faces,
+    squares,
+    availableNums,
+    candidateNums,
+    secondsLeft,
+    setGameState,
+  } = useGameState();
 
-  const [availableNums, setAvailableNums] = useState(range(1, squares));
+  const candidatesAreWrong = sum(candidateNums) > faces;
 
-  const [candidateNums, setCandidateNums] = useState([]);
-
-  const [secondsLeft, setSecondsLeft] = useState(10);
-  useEffect(() => {
-    if (secondsLeft > 0 && availableNums.length > 0) {
-      const timerId = setTimeout(() => {
-        setSecondsLeft(secondsLeft - 1);
-      }, 1000);
-      return () => clearTimeout(timerId);
-    }
-  });
+  const gameStatus =
+    availableNums.length === 0 ? "won" : secondsLeft === 0 ? "lost" : "active";
 
   const numberStatus = (number) => {
     if (!availableNums.includes(number)) {
@@ -36,8 +33,6 @@ const CoolMathGame = ({ startNewGame, numberOfPlays }) => {
     return "available";
   };
 
-  const candidatesAreWrong = sum(candidateNums) > faces;
-
   const onNumberClick = (number, currentStatus) => {
     if (gameStatus !== "active" || currentStatus === "used") {
       return;
@@ -48,23 +43,11 @@ const CoolMathGame = ({ startNewGame, numberOfPlays }) => {
         ? candidateNums.concat(number)
         : candidateNums.filter((cn) => cn !== number);
 
-    if (sum(newCandidateNums) !== faces) {
-      setCandidateNums(newCandidateNums);
-    } else {
-      const newAvailableNums = availableNums.filter(
-        (n) => !newCandidateNums.includes(n)
-      );
-      setFaces(randomSumIn(newAvailableNums, squares));
-      setAvailableNums(newAvailableNums);
-      setCandidateNums([]);
-    }
-    console.log(availableNums.length);
+    setGameState(newCandidateNums);
   };
 
   // const gameIsDone = availableNums.length === 0;
   // const gameIsLost = secondsLeft === 0;
-  const gameStatus =
-    availableNums.length === 0 ? "won" : secondsLeft === 0 ? "lost" : "active";
 
   return (
     <div>
