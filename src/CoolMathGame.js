@@ -1,4 +1,4 @@
-import useGameState from "./hooks/UseGameState";
+import useGameState from "./hooks/useGameState";
 import Tile from "./Tile";
 import { range, sum } from "./utils";
 import "bootstrap/dist/css/bootstrap.css";
