@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Tile from "./Tile";
 import { range, sum, random, randomSumIn } from "./utils";
 import "bootstrap/dist/css/bootstrap.css";
-import theme from "./Theme";
 import Button from "./Button";
 import Grid from "./Grid";
 import PlayAgain from "./PlayAgain";

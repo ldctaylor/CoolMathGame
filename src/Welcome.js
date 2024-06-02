@@ -1,4 +1,3 @@
-import theme from "./Theme";
 import React from "react";
 
 function Welcome({ numberOfPlays }) {

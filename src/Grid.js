@@ -1,5 +1,3 @@
-import { range } from "./utils";
-
 function Grid({ className, component }) {
   return (
     <div
