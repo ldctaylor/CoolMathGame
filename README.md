@@ -1,3 +1,12 @@
+#To-do
+
+- Sort out the box flex so that the grid always stays in place and doesn't get squished
+- Center the smiley faces /numbers in their squares using flex.
+
+#Ideas
+
+- Player can choose the icon? Smiley face / star / flower / heart / poop / mixed
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
